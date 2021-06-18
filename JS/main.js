@@ -14,21 +14,37 @@ function init (){
             map.balloon.open(coords, {
                 contentBody: `<div class="balloon">
                                     <h1 class="title">Отзыв:</h1>
-                                    <input class="input" type="text" placeholder="Укажите ваше имя">
-                                    <input class="input" type="text" placeholder="Укажите место">
-                                    <textarea class="textarea" placeholder ="Оставить отзыв"></textarea>
+                                    <input class="input input__name" type="text" placeholder="Укажите ваше имя">
+                                    <input class="input input__place" type="text" placeholder="Укажите место">
+                                    <textarea class="textarea textarea__reviews" placeholder ="Оставить отзыв"></textarea>
                                     <button class="button">Добавить</button>
                                 </div>`,
                 contentFooter:'<sup>Щелкните еще раз для выхода</sup>'
+                
             });
         } else {
             map.balloon.close();
         }
+        document.addEventListener('click', (evt) => {
+
+            const name = document.querySelector('.input__name');
+            const place = document.querySelector('.input__place');
+            const reviews = document.querySelector('.textarea__reviews');
+
+            if (evt.target.classList.contains('button')) {
+
+                let saveReviews = [];
+                let storage = localStorage;
+                storage.data = JSON.stringify({
+                    name: name.value,
+                    place: place.value,
+                    reviews: reviews.value
+                })
+                saveReviews.push(JSON.parse(storage.data));
+                console.log(saveReviews)
+            }
+          })
     });   
 };
-const btn = document.querySelector('.button');
 
-    btn.addEventListener('click', () => {
-        console.log('click!!!')
-    })
 
